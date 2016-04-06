@@ -20,7 +20,7 @@ void main() {
 	PRR = _BV(PRADC);																	// disable adc
 
 	// setup port
-	DDRB = 0x03;																			// PB0 and PB1 output
+	DDRB = 0x0F;																			// all output
 
 	// loop
 	for(;;){

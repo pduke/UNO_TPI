@@ -53,6 +53,8 @@ void lcd_scroll_up(void);
 //		text I/O. With the ready flag comes the current cursor position
 //		that is used to wrap lines and scroll the display.
 //
+//		Removed unused functions and added a pattern loading funciton.
+//
 // UC-204 LCD Display pin-outs
 //
 //	1	GND
