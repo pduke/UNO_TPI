@@ -22,7 +22,7 @@ compile: $(PROGRAM).hex
 
 .SECONDARY:
 
-%.o: %.c  tiny10_toggle.mak
+$(PROGRAM).o: $(PROGRAM).c  tiny10_toggle.mak
 	avr-gcc -g -Os -mmcu=$(MCU) -std=c99 \
 		-I../ \
 		-ffunction-sections \
@@ -32,14 +32,14 @@ compile: $(PROGRAM).hex
 		-Wl,-Map=$@.map -MMD -MP -MF $@.d \
 		-DF_CPU=$(F_CPU) -DMCU=$(MCU)
 
-%.ass: %.o
+$(PROGRAM).ass: $(PROGRAM).o
 	avr-objdump -S -d $< > $@
 	
-%.hex: %.o %.ass
+$(PROGRAM).hex: $(PROGRAM).o $(PROGRAM).ass
 	avr-objcopy -j .text -j .data -O ihex $< $@
-	avr-size -A $(*F).hex 
+	avr-size -A $(PROGRAM).hex 
 
-%.pgm: %.hex
+$(PROGRAM).pgm: $(PROGRAM).hex
 	avrdude $(AVRDUDE_PARMS) \
 		-U flash:w:$<:a \
 		-U fuse:w:0X$(FUSE):m \

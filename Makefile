@@ -20,21 +20,21 @@ flash: $(PROGRAM).pgm			# 'make flash' will compile and upload to Arduino
 
 .SECONDARY:
 
-%.o: %.c Makefile ../libNoter/lcd_Noter_4_bit.h
+$(PROGRAM).o: $(PROGRAM).c Makefile ../libNoter/lcd_Noter_4_bit.h
 	avr-gcc -g -Os -fno-jump-tables -Wall -mmcu=$(MCU) -mcall-prologues \
 		-I ../ -std=c99 \
 		-Wl,-u,vfprintf -lprintf_flt -Wl,-u,vfscanf -lscanf_flt -lm \
 		$< -o $@ \
 		$(GCC_PARAMS)
 	
-%.ass: %.o
+$(PROGRAM).ass: $(PROGRAM).o
 	avr-objdump -S -d $< > $@
 	
-%.hex: %.o %.ass
+$(PROGRAM).hex: $(PROGRAM).o $(PROGRAM).ass
 	avr-objcopy -j .text -O ihex $< $@
-	avr-size -A $(*F).hex 
+	avr-size -A $(PROGRAM).hex 
 
-%.pgm: %.hex
+$(PROGRAM).pgm: $(PROGRAM).hex
 	avrdude $(AVRDUDE_PARAMS) \
 		-U flash:w:$<:a 
 
