@@ -20,7 +20,7 @@ flash: $(PROGRAM).pgm			# 'make flash' will compile and upload to Arduino
 
 .SECONDARY:
 
-$(PROGRAM).o: $(PROGRAM).c Makefile lcd_4_bit.h
+$(PROGRAM).o: $(PROGRAM).c Makefile lcd_4_bit.c
 	avr-gcc -g -Os -fno-jump-tables -Wall -mmcu=$(MCU) -mcall-prologues \
 		-I ../ -std=c99 \
 		-Wl,-u,vfprintf -lprintf_flt -Wl,-u,vfscanf -lscanf_flt -lm \
